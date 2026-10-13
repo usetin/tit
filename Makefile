@@ -14,6 +14,7 @@ TINC := $(TIN)/bin/tinc
 all: build
 
 build: $(TINC)
+	@mkdir -p bin
 	$(TIN)/tin build main.tin -o bin/tit
 
 test: $(TINC)

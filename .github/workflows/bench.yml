@@ -37,6 +37,7 @@ jobs:
       - name: Build the compiler and tit
         run: |
           make -C tin bin/tinc
+          mkdir -p bin
           sh tin/tin build main.tin -o bin/tit
       - name: Benchmark (the checkout is a detached HEAD; a branch at it, for the script's clone)
         run: |
