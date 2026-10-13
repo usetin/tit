@@ -1,0 +1,61 @@
+name: Benchmark (tit against git)
+
+# Warm status, log, diff and repack of an adopted repository, tit against git (#807), 7 alternating
+# runs each. Linux numbers are the ones quoted; on shared runners only the ratios are meaningful.
+on:
+  workflow_dispatch:
+    inputs:
+      tin_ref:
+        description: The tin revision tit is built with (branch, tag or SHA; empty is main)
+        type: string
+        default: ''
+
+defaults:
+  run:
+    shell: bash
+
+permissions:
+  contents: read
+
+jobs:
+  tit:
+    name: Linux
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check out the tin toolchain
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: usetin/tin
+          ref: ${{ inputs.tin_ref || 'main' }}
+          path: tin
+          persist-credentials: false
+      - name: Build the compiler and tit
+        run: |
+          make -C tin bin/tinc
+          sh tin/tin build main.tin -o bin/tit
+      - name: Benchmark (the checkout is a detached HEAD: a branch at it, for the script's clone)
+        run: |
+          mkdir -p bin/tit-bench
+          git branch -f tit-bench HEAD
+          {
+            echo '```'
+            uname -srm; lscpu | grep -E '^(Model name|CPU\(s\)):' || true; git --version
+            echo "tin: $(git -C tin rev-parse --short HEAD)"
+            echo "tit: $(git rev-parse --short HEAD)"
+            echo '```'
+          } | tee bin/bench-tit.txt
+          sh bench/run.sh bin/tit "$GITHUB_WORKSPACE" bin/tit-bench tit-bench | tee -a bin/bench-tit.txt
+          cat bin/bench-tit.txt >> "$GITHUB_STEP_SUMMARY"
+      - name: Keep the report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: bench-tit
+          path: bin/bench-tit.txt
+          retention-days: 90
+          if-no-files-found: ignore

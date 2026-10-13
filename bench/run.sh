@@ -1,7 +1,7 @@
 #!/bin/sh
 # tit against git on the Tin repository (#807): warm status, log and diff, the same working directory for both
 # (tit adopts the clone in place), 7 alternating runs each, medians and the ratio tit/git (lower is faster).
-# Linux only (date +%s%N). Usage: bench/tit/run.sh <tit> <git clone with full history> <scratch dir> [branch]
+# Linux numbers are the ones quoted. Usage: bench/run.sh <tit> <git clone with full history> <scratch dir> [branch]
 # (the branch of that clone to measure, main by default)
 set -eu
 tit=$(cd "$(dirname "$1")" && pwd)/$(basename "$1")
