@@ -9,7 +9,7 @@ import "seal"
 // tit/merge's line merge against git (#786): this program writes 60 triples (a base of 40 lines and two sides with
 // random edits) under /tmp and prints, for each, whether the merge is clean and, when it is, the SHA-256 of the result.
 // The golden output is what `git merge-file -p` gave for the same files (regenerate with
-// products/tit/tests/merge_git.sh).
+// tests/merge_git.sh).
 
 // dir is the scratch directory (#1065): $TIN_TEST_DIR when the script that writes the golden output names one (it
 // reads what this program leaves there), else this run's own, removed when main ends.

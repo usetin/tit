@@ -8,8 +8,8 @@ import "fault"
 import "quarry"
 import "seal"
 
-// Tests for the index and status (#783). The comparison with git status is products/tit/tests/programs/status_git.tin;
-// status on several cores is products/tit/tests/programs/status_cores.tin.
+// Tests for the index and status (#783). The comparison with git status is tests/programs/status_git.tin;
+// status on several cores is tests/programs/status_cores.tin.
 
 fn fresh(name str) str {
 	let d = "/tmp/tin-test-tit-index-" + name + "-" + seal.Hex(seal.RandomBytes(4))

@@ -7,7 +7,7 @@ import "say"
 // tit/diff's unified output against git (#785): this program writes pairs of files under /tmp and prints their
 // unified diffs. The golden output is what `git diff --no-index --no-indent-heuristic -U3` printed for the same
 // pairs, with its "diff --git" and "index" lines and the function names after "@@" left out (regenerate with
-// products/tit/tests/diff_git.sh).
+// tests/diff_git.sh).
 
 // dir is the scratch directory (#1065): $TIN_TEST_DIR when the script that writes the golden output names one (it
 // reads what this program leaves there), else this run's own, removed when main ends.

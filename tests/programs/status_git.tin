@@ -10,7 +10,7 @@ import "tide"
 
 // tit's status against git's (#783). With no argument this program builds a working directory, stages and commits it,
 // makes staged and unstaged changes of every kind, and prints status in git's porcelain v1 form. The golden output is
-// `git status --porcelain` after the same file changes with git doing the staging (products/tit/tests/status_git.sh
+// `git status --porcelain` after the same file changes with git doing the staging (tests/status_git.sh
 // runs this program's init, stage-files and work steps around git).
 
 // dir is the scratch directory (#1065): $TIN_TEST_DIR when the script that writes the golden output names one (it

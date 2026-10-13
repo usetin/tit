@@ -9,7 +9,7 @@ import "sift"
 
 // tit's tree diff against git (#785): this program writes two directories under /tmp, stores each as a tree and prints
 // the changes as `git diff --no-index -M --name-status` and `--stat` print them (rename scores left out: git measures
-// similarity its own way). The golden output is git's, for the same directories (products/tit/tests/treediff_git.sh).
+// similarity its own way). The golden output is git's, for the same directories (tests/treediff_git.sh).
 
 // dir is the scratch directory (#1065): $TIN_TEST_DIR when the script that writes the golden output names one (it
 // reads what this program leaves there), else this run's own, removed when main ends.

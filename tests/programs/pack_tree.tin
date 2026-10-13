@@ -7,7 +7,8 @@ import "quarry"
 import "say"
 
 // Packs real files (#778): every .tin file of the standard library, plus an edited second version of each, is packed;
-// the pack verifies and every object reads back the same. Run from the repository root (products/tit/tests/run.sh).
+// the pack verifies and every object reads back the same. Run from the repository root (tests/run.sh); TIN_ROOT is a
+// tin checkout (default ../tin), whose toolchain/std is packed.
 
 // out is this run's own pack directory (#1065).
 let out = "/tmp/tin-test-tit-pack-tree-{quarry.Pid()}"
@@ -15,13 +16,17 @@ let out = "/tmp/tin-test-tit-pack-tree-{quarry.Pid()}"
 fn main() {
 	mut s = store.NewMem()
 	mut ids = []object.Id{}
-	let pkgs = quarry.ReadDir("toolchain/std") catch err {
+	mut tinRoot = quarry.Getenv("TIN_ROOT")
+	if len(tinRoot) == 0 {
+		tinRoot = "../tin"
+	}
+	let pkgs = quarry.ReadDir(tinRoot + "/toolchain/std") catch err {
 		say.Line(err)
 		return
 	}
 	mut files = 0
 	for pkg in pkgs {
-		let dir = "toolchain/std/" + pkg
+		let dir = tinRoot + "/toolchain/std/" + pkg
 		if !quarry.IsDir(dir) {
 			continue
 		}

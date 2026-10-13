@@ -3,12 +3,17 @@
 Version control written in Tin. tit keeps history the way git does (content-addressed objects, trees, commits,
 branches), with SHA-256 ids, and adds what git leaves to discipline: every operation is recorded and can be undone,
 every change has an id that survives amending, and a git repository comes in (and goes back out) without losing a
-byte. The design, formats and seams are in [design/tit.md](../../design/tit.md); every command and flag is in
-[toolchain/docs/TIT.md](../../toolchain/docs/TIT.md); the milestone is [#769](https://github.com/yasserreslan/tin/issues/769).
+byte. The design, formats and seams are in
+[design/tit.md](https://github.com/usetin/docs/blob/main/design/tit.md); every command and flag is in
+[TIT.md](https://github.com/usetin/docs/blob/main/TIT.md); the milestone is [#769](https://github.com/usetin/tin/issues/769).
 
 ```sh
-bin/tinc -o tit products/tit/main.tin
+make build        # builds ../tin/bin/tinc when needed, then tit into bin/tit
 ```
+
+The Tin toolchain (the `tinc` compiler, the runtime, the standard library and the packages) lives in
+[usetin/tin](https://github.com/usetin/tin); `TIN=/path/to/tin` points the Makefile at a checkout that is
+not `../tin`.
 
 Linux is where tit runs as a server (`tit serve`); the command works on Linux and macOS alike.
 
@@ -105,7 +110,7 @@ operation.
 
 ```sh
 tit workspace new issue-42    # ../<repo>-issue-42, on its own branch, sharing this store, with its own undo
-tit who products/tit          # who changed this area lately
+tit who .                    # who changed this area lately
 tit timeline notes.txt        # versions of a file kept before each command that changed files
 tit timeline notes.txt 3      # put version 3 back
 tit watch                     # keep every save, until Ctrl-C
@@ -149,8 +154,9 @@ files for them, and `.tit-guard-allow` lists paths it leaves alone. `tit verify`
 
 ## Tests
 
-`sh products/tit/tests/run.sh bin/tinc` runs everything: each package's tests, the programs and sessions compared with
+`make test` (or `sh tests/run.sh [COMPILER]`) runs everything: each package's tests, the programs and sessions compared with
 git's output, and the scripts in `tests/scripts` (which need git, openssl, perl and ssh-keygen): crash points at every
-write, damaged inputs of every format, sharing over `tit serve`, and the rest. `tests/tinrepo.sh` checks tit against
-git on a full clone of the Tin repository (adopt, revisions, status, switches, merges, mirror, clone, lazy clone); it
+write, damaged inputs of every format, sharing over `tit serve`, and the rest. It builds the tin toolchain from the checkout
+`TIN_ROOT` names (`../tin` by default) and reads the manual from `TIN_DOCS` (`../docs`, the usetin/docs checkout).
+`tests/tinrepo.sh` checks tit against git on a full clone of the Tin repository (adopt, revisions, status, switches, merges, mirror, clone, lazy clone); it
 takes minutes and is run by hand on Linux.

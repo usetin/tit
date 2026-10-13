@@ -8,7 +8,7 @@ import "quarry"
 import "seal"
 
 // Tests for the operation log (#780). A writer killed with SIGKILL mid-operation:
-// products/tit/tests/programs/oplog_crash.tin.
+// tests/programs/oplog_crash.tin.
 
 fn fresh(name str) str {
 	let d = "/tmp/tin-test-tit-oplog-" + name + "-" + seal.Hex(seal.RandomBytes(4))

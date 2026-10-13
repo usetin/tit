@@ -6,7 +6,7 @@ import "crucible"
 import "sift"
 
 // Tests for the merge (#786): the three-way table for trees, one row each, and line merges. The comparison with
-// git merge-file is products/tit/tests/programs/merge_git.tin.
+// git merge-file is tests/programs/merge_git.tin.
 
 fn blobId(s mut store.Mem, text str) object.Id {
 	return s.PutRaw(object.Kind.Blob, text) catch _ {

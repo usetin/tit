@@ -19,7 +19,7 @@ git init -q --bare -b main "$d/srv/b.git"
 git -C "$d/srv/a.git" config http.receivepack true
 git -C "$d/srv/b.git" config http.receivepack true
 # the server takes a free port and says which: a port picked here can be one the system has in use already
-perl "$root/products/tit/tests/githttp.pl" "$d/srv" 0 > "$d/srv.log" 2>&1 &
+perl "$root/tests/githttp.pl" "$d/srv" 0 > "$d/srv.log" 2>&1 &
 server=$!
 trap 'kill $server 2> /dev/null || true' EXIT HUP INT TERM
 n=0

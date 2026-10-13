@@ -4,9 +4,9 @@
 # each version is under 24 KiB; then golden/merge_corpus.out records git merge-file's verdict for each (clean, and
 # the merged text's SHA-256, or conflict). Needs git and a clone with origin's branches. Usage: merge_corpus.sh [max]
 set -eu
-cd "$(dirname "$0")/../../.." || exit 1
+cd "$(dirname "$0")/.." || exit 1
 max=${1:-40}
-dir=products/tit/tests/corpus/merge
+dir=tests/corpus/merge
 rm -rf "$dir"
 mkdir -p "$dir"
 n=0
@@ -28,7 +28,7 @@ for b in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin | gr
 		n=$((n + 1))
 	done
 done
-out=products/tit/tests/golden/merge_corpus.out
+out=tests/golden/merge_corpus.out
 : > "$out"
 k=0
 while [ $k -lt $n ]; do

@@ -6,7 +6,7 @@ import "fault"
 import "quarry"
 import "twine"
 
-// Tests for branches and merging (#791); the comparison with git is products/tit/tests/sessions/branch.sh.
+// Tests for branches and merging (#791); the comparison with git is tests/sessions/branch.sh.
 
 fn TestSwitchRefuses(t mut crucible.T) {
 	let d = fresh2(mut t, "switch")

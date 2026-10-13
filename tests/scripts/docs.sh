@@ -5,7 +5,7 @@ set -eu
 tit=$1
 d=$2
 root=$PWD
-manual="$root/toolchain/docs/TIT.md"
+manual="$TIN_DOCS/TIT.md"
 export HOME="$d/home" XDG_CONFIG_HOME="$d/home" TIT_NO_PAGER=1
 fail() {
 	echo "FAIL docs: $*"
@@ -19,9 +19,9 @@ sed -n 's/^  \([a-z]\)/\1/p' "$d/usage.txt" | sed 's/  .*//' | awk '{ n = split(
 n=0
 while IFS="$(printf '\t')" read -r first alt; do
 	if [ -z "$alt" ]; then
-		grep -q "tit $first\b" "$manual" || fail "tit $first is not in toolchain/docs/TIT.md"
+		grep -q "tit $first\b" "$manual" || fail "tit $first is not in the manual ($TIN_DOCS/TIT.md)"
 	else
-		grep -q "tit $alt\b\|tit $first $alt\b" "$manual" || fail "tit $alt (or tit $first $alt) is not in toolchain/docs/TIT.md"
+		grep -q "tit $alt\b\|tit $first $alt\b" "$manual" || fail "tit $alt (or tit $first $alt) is not in the manual ($TIN_DOCS/TIT.md)"
 	fi
 	n=$((n + 1))
 done < "$d/commands.txt"
@@ -30,7 +30,7 @@ done < "$d/commands.txt"
 grep -o -- '--[a-z][a-z-]*\| -[a-zA-Z]\b' "$d/usage.txt" | sed 's/^ //' | sort -u > "$d/flags.txt"
 f=0
 while read -r flag; do
-	grep -q -- "$flag" "$manual" || fail "the flag $flag is not in toolchain/docs/TIT.md"
+	grep -q -- "$flag" "$manual" || fail "the flag $flag is not in the manual ($TIN_DOCS/TIT.md)"
 	f=$((f + 1))
 done < "$d/flags.txt"
 echo "ok all $n commands and $f flags of the usage text are in the manual"

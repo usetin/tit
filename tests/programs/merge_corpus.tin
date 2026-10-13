@@ -8,9 +8,9 @@ import "seal"
 // tit/merge's line merge against git on real files (#786): tests/corpus/merge holds (base, ours, theirs) triples of
 // files that both main and another branch of the Tin repository changed since their merge base. For each, this
 // program prints whether the merge is clean and, when it is, the SHA-256 of the result; the golden output is what
-// `git merge-file -p` gave for the same files (rebuild both with products/tit/tests/merge_corpus.sh).
+// `git merge-file -p` gave for the same files (rebuild both with tests/merge_corpus.sh).
 
-let dir = "products/tit/tests/corpus/merge"
+let dir = "tests/corpus/merge"
 
 fn main() {
 	mut k = 0

@@ -5,6 +5,9 @@
 set -eu
 tit=$1
 d=$2
+root=$PWD
+tin_root=${TIN_ROOT:-../tin}
+tin_root=$(cd "$tin_root" && pwd)
 export HOME="$d" XDG_CONFIG_HOME="$d" TIT_NO_PAGER=1
 fail() {
 	echo "FAIL semantic: $*"
@@ -78,7 +81,7 @@ t init . > /dev/null
 t config set user.name Ada
 t config set user.email ada@example.com
 for f in parse lower check; do
-	cp "$root/toolchain/compiler/$f.tin" compiler/
+	cp "$tin_root/toolchain/compiler/$f.tin" compiler/
 done
 t add .
 t commit -m "the compiler" > /dev/null

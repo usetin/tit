@@ -3,15 +3,15 @@
 # first in a repository, put the second in its place, and ask git for the staged changes (--name-status, with rename
 # scores dropped, and --stat). Needs git. Usage: treediff_git.sh [COMPILER]
 set -eu
-cd "$(dirname "$0")/../../.." || exit 1
-compiler=${1:-bin/tinc}
+cd "$(dirname "$0")/.." || exit 1
+tin_root=${TIN_ROOT:-../tin}; compiler=${1:-$tin_root/bin/tinc}
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT HUP INT TERM
 # the program works in this directory and leaves its files there (#1065)
 export TIN_TEST_DIR="$tmp/work"
-"$compiler" -o "$tmp/treediff_git" products/tit/tests/programs/treediff_git.tin
+"$compiler" -o "$tmp/treediff_git" tests/programs/treediff_git.tin
 "$tmp/treediff_git" setup
-out=$PWD/products/tit/tests/golden/treediff_git.out
+out=$PWD/tests/golden/treediff_git.out
 repo=$tmp/repo
 mkdir "$repo"
 cp -R "$TIN_TEST_DIR"/a/. "$repo/"

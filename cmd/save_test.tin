@@ -8,7 +8,7 @@ import "fault"
 import "quarry"
 import "twine"
 
-// Tests for saving work (#790); the comparison with git is products/tit/tests/sessions/save.sh.
+// Tests for saving work (#790); the comparison with git is tests/sessions/save.sh.
 
 fn runErr(args []str) str {
 	let (g, c, perr) = Parse(args)

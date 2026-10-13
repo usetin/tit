@@ -5,6 +5,9 @@
 set -eu
 tit=$1
 d=$2
+root=$PWD
+tin_root=${TIN_ROOT:-../tin}
+tin_root=$(cd "$tin_root" && pwd)
 export HOME="$d" XDG_CONFIG_HOME="$d" TIT_NO_PAGER=1
 fail() {
 	echo "FAIL declmerge: $*"
@@ -65,7 +68,7 @@ cd "$d/real"
 t init . > /dev/null
 t config set user.name Ada
 t config set user.email ada@example.com
-cp "$root/toolchain/compiler/check.tin" compiler/check.tin
+cp "$tin_root/toolchain/compiler/check.tin" compiler/check.tin
 t add .
 t commit -m base > /dev/null
 anchor=$(grep '^fn [a-zA-Z]' compiler/check.tin | awk 'NR == 200 { print $2 }' | sed 's/(.*//')

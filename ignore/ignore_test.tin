@@ -2,7 +2,7 @@ package ignore
 
 import "crucible"
 
-// Unit tests for tit/ignore (#782); the comparison with git itself is products/tit/tests/programs/ignore_git.tin.
+// Unit tests for tit/ignore (#782); the comparison with git itself is tests/programs/ignore_git.tin.
 
 fn TestMatch(t mut crucible.T) {
 	let yes = [][]str{

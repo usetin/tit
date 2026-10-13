@@ -1,7 +1,7 @@
 #!/bin/sh
 # tit against git on the Tin repository itself (#781, #783, #784, #789, #791, #805). Not part of run.sh: it needs a
 # clone with the whole history (CI's checkout is shallow) and takes minutes. Run it on Linux:
-#   sh products/tit/tests/tinrepo.sh <tit> <git clone of the Tin repo, full history> <empty dir>
+#   sh tests/tinrepo.sh <tit> <git clone of the Tin repo, full history> <empty dir>
 # Every check prints "ok ..." or stops at the first "FAIL ...".
 set -eu
 tit=$(cd "$(dirname "$1")" && pwd)/$(basename "$1")

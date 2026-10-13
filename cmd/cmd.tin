@@ -1421,11 +1421,11 @@ fn dispatch(g Global, c Command, o mut Out) ! {
 			} else {
 				o.Text(helpOf(topic))
 				o.Line("")
-				o.Line("Every command also takes the global flags: -C dir, --json, --trace. The manual: toolchain/docs/TIT.md.")
+				o.Line("Every command also takes the global flags: -C dir, --json, --trace. The manual: https://github.com/usetin/docs/blob/main/TIT.md.")
 			}
 		}
 		Version(verbose) => {
-			o.Line("tit 0 (design/tit.md, #769)")
+			o.Line("tit 0 (usetin/docs design/tit.md, #769)")
 			if verbose {
 				for f in sentinels() {
 					o.Line("  " + f)

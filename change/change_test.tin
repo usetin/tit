@@ -8,7 +8,7 @@ import "seal"
 import "spawn"
 
 // Tests for refs, HEAD, the change index and the lock (#779). Many processes updating one ref at once:
-// products/tit/tests/programs/refs_race.tin.
+// tests/programs/refs_race.tin.
 
 fn fresh(name str) str {
 	let d = "/tmp/tin-test-tit-change-" + name + "-" + seal.Hex(seal.RandomBytes(4))

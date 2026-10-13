@@ -9,7 +9,7 @@ import "squash"
 
 // Tests for the stores (#777): one suite run against the memory and the loose store through the shape, damaged
 // and lying files, layering and the decoded cache. Two processes writing the same objects at once:
-// products/tit/tests/programs/store_race.tin.
+// tests/programs/store_race.tin.
 
 fn person() object.Person {
 	return object.Person{Name: "Ana", Email: "ana@x", When: 1700000000, Zone: 60}

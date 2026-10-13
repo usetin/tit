@@ -7,7 +7,7 @@ import "sift"
 
 // tit/ignore against git (#782): this program builds a tree of files and .gitignore files under /tmp, then prints
 // every file the rules ignore. The golden output is what `git ls-files -o -i --exclude-standard` printed for the
-// same tree (regenerate with products/tit/tests/ignore_git.sh).
+// same tree (regenerate with tests/ignore_git.sh).
 
 // dir is the scratch directory (#1065): $TIN_TEST_DIR when the script that writes the golden output names one (it
 // reads what this program leaves there), else this run's own, removed when main ends.

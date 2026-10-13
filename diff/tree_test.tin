@@ -5,7 +5,7 @@ import "../store"
 import "crucible"
 
 // Tree diff cases git's comparison does not cover (#785); that comparison is
-// products/tit/tests/programs/treediff_git.tin.
+// tests/programs/treediff_git.tin.
 
 fn tree1(s mut store.Mem, name str, body str) object.Id {
 	let b = s.PutRaw(object.Kind.Blob, body) catch _ {

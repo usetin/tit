@@ -8,6 +8,7 @@ set -eu
 tit=$1
 d=$2
 root=$PWD
+tin_cmd=${TIN_ROOT:-../tin}/tin
 export HOME="$d/home" XDG_CONFIG_HOME="$d/home" TIT_NO_PAGER=1
 fail() {
 	echo "FAIL replay_push: $*"
@@ -18,7 +19,7 @@ mkdir -p "$HOME" "$d/stranger" "$d/spool"
 t config set --user user.name Ada
 t config set --user user.email ada@example.com
 pub=$(t key 2>/dev/null)
-reader=$(cd "$root" && sh ./tin replay key "$d/reader.key")
+reader=$(cd "$root" && sh "$tin_cmd" replay key "$d/reader.key")
 seed=$(openssl rand -hex 32)
 mkdir "$d/server"
 cd "$d/server"
@@ -97,7 +98,7 @@ signer=$(sed -n 's/.*signed by \([0-9a-f]*\)$/\1/p' "$d/got.txt")
 printf '#!/bin/sh\ncd "%s/server" && exec "%s" serve --addr 127.0.0.1:1\n' "$d" "$tit" > "$d/serve.sh"
 chmod +x "$d/serve.sh"
 status=0
-TIT_TIN="$root/tin" TIN_REPLAY_IDENTITY="$d/reader.key" TIN_REPLAY_SIGNERS=$signer t replay "$id" --against "$d/serve.sh" > "$d/replay.txt" 2>&1 || status=$?
+TIT_TIN="$tin_cmd" TIN_REPLAY_IDENTITY="$d/reader.key" TIN_REPLAY_SIGNERS=$signer t replay "$id" --against "$d/serve.sh" > "$d/replay.txt" 2>&1 || status=$?
 [ $status = 0 ] || fail "tit replay --against exited $status: $(cat "$d/replay.txt")"
 grep -aq "^replay: status 401 (recorded 401)" "$d/replay.txt" || fail "the replay: $(cat "$d/replay.txt")"
 grep -aq "divergence" "$d/replay.txt" && fail "the replay diverged: $(cat "$d/replay.txt")"

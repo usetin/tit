@@ -8,6 +8,7 @@ set -eu
 tit=$1
 d=$2
 root=$PWD
+tin_cmd=${TIN_ROOT:-../tin}/tin
 export HOME="$d/home" XDG_CONFIG_HOME="$d/home" TIT_NO_PAGER=1
 fail() {
 	echo "FAIL replay: $*"
@@ -52,7 +53,7 @@ capsule=$(ls "$d/spool" | sort | tail -1)
 printf '#!/bin/sh\ncd "%s/server" && exec "%s" serve --addr 127.0.0.1:1\n' "$d" "$tit" > "$d/serve.sh"
 chmod +x "$d/serve.sh"
 status=0
-(cd "$root" && TIN_REPLAY_KEY=$key sh ./tin replay "$d/spool/$capsule" --against "$d/serve.sh") > "$d/replay.txt" 2>&1 || status=$?
+(cd "$root" && TIN_REPLAY_KEY=$key sh "$tin_cmd" replay "$d/spool/$capsule" --against "$d/serve.sh") > "$d/replay.txt" 2>&1 || status=$?
 [ $status = 0 ] || fail "tin replay exited $status: $(cat "$d/replay.txt")"
 grep -aq "^replay: status 401 (recorded 401)" "$d/replay.txt" || fail "the replay: $(cat "$d/replay.txt")"
 grep -aq "divergence" "$d/replay.txt" && fail "the replay diverged: $(cat "$d/replay.txt")"
