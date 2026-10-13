@@ -38,7 +38,7 @@ jobs:
         run: |
           make -C tin bin/tinc
           sh tin/tin build main.tin -o bin/tit
-      - name: Benchmark (the checkout is a detached HEAD: a branch at it, for the script's clone)
+      - name: Benchmark (the checkout is a detached HEAD; a branch at it, for the script's clone)
         run: |
           mkdir -p bin/tit-bench
           git branch -f tit-bench HEAD
